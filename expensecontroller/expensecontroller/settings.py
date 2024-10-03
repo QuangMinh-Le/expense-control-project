@@ -17,6 +17,7 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+from django.contrib import messages
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -132,4 +133,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # django_heroku.settings(locals())
+
+MESSAGES_TAGS = {
+    messages.error: "danger"
+}
+
+
+# Email information 
+
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL= os.environ.get('DEFAULT_FROM_EMAIL')
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 

@@ -75,3 +75,8 @@
  .bd-mode-toggle .dropdown-menu .active .bi {
    display: block !important;
  }
+
+ /* small.float-end.py-2.showPasswordToggle{
+  cursor: pointer;
+  text-decoration: underline;
+ } */
