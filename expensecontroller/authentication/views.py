@@ -91,3 +91,6 @@ class LoginView(View):
                              user.username+'You are now logged in.')
             messages.error(request, "There is something wrong with login process, please try again.")
             return render(request, 'authentication/login.html')
+      
+      messages.error(request, "Please all fields")
+      return render(request, 'authentication/login.html')

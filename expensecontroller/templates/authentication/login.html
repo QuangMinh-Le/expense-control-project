@@ -19,7 +19,7 @@
              
                              <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login to your account</p>
              
-                             <form class="mx-1 mx-md-4" action="{% url 'register'%}" method="post">
+                             <form class="mx-1 mx-md-4" action="{% url 'login'%}" method="post">
                               {% csrf_token %}
                               {% include "partials/_messages.html" %}
                                <div class="d-flex flex-row align-items-center mb-4">
