@@ -77,6 +77,8 @@ class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary"
       </li>
     </ul>
 
+    
+
     <hr class="my-3" />
 
     <ul class="nav flex-column mb-auto">
@@ -86,6 +88,23 @@ class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary"
             <use xlink:href="#gear-wide-connected" />
           </svg>
           Settings
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2" href="{% url 'preferences' %}">
+          <svg class="bi">
+            <use xlink:href="#puzzle" />
+          </svg>
+          General
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2" href="#">
+          <svg class="bi">
+            <use xlink:href="#people" />
+          </svg>
+          Account
         </a>
       </li>
 
