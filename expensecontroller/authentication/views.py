@@ -1,11 +1,12 @@
 import json
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from validate_email import validate_email
 from django.contrib import messages
 from django.core.mail import EmailMessage
+from django.core.cache import cache
 
 from django.urls import reverse
 from django.contrib import auth
@@ -58,7 +59,7 @@ class RegistrationView(View):
             
             user = User.objects.create_user(username = username, email = email)
             user.set_password(password)
-            user.is_active = False
+            user.is_active = True
             user.save()
             # email_subject="Activate your account"
             # email_body = "Test body test"
@@ -87,10 +88,22 @@ class LoginView(View):
          user=auth.authenticate(username = username, password = password)
          if user: 
             auth.login(request, user)
-            messages.success(request, "Welcome" + 
-                             user.username+'You are now logged in.')
-            messages.error(request, "There is something wrong with login process, please try again.")
-            return render(request, 'authentication/login.html')
+            messages.success(request, "Welcome " + 
+                             user.username+'! You are now logged in.')
+            
+            # Redirect to homepage
+            return redirect('expenses')
+         
+         # NO user found
+         messages.error(request, "Invalid credential. Please try again with another username or password.")
+         return render(request, 'authentication/login.html')
       
-      messages.error(request, "Please all fields")
+      messages.error(request, "Please fill all fields")
       return render(request, 'authentication/login.html')
+   
+class LogoutView(View):
+   def post (self, request):
+      auth.logout(request)
+      cache.clear()
+      messages.success(request, "Successfully logged out.")
+      return redirect('login')

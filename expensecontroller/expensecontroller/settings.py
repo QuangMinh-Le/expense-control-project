@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'expenses'
+    'expenses',
+    'userpreferences'
 ]
 
 MIDDLEWARE = [
@@ -147,4 +148,3 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL= os.environ.get('DEFAULT_FROM_EMAIL')
 EMAIL_PORT = 587
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-
