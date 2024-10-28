@@ -248,7 +248,7 @@
         </li>
       </ul>
 
-      <div id="navbarSearch" class="navbar-search w-100 collapse show">
+      <div id="navbarSearch" class="navbar-search col-md-8 collapse show">
         <input
           class="form-control w-100 rounded-0 border-0"
           type="text"
@@ -259,7 +259,7 @@
 
       <!-- Signout Button -->
 
-      <form action="{% url 'logout' %}" method="POST" class="col-md-3 col-lg-1 me-0 px-3 mt-3">
+      <form action="{% url 'logout' %}" method="POST" class="col-md-3 col-lg-2 me-0 d-flex justify-content-center mt-3">
         {% csrf_token %}
         <input type="submit" value="Sign out" class="btn btn-primary btn-lg submit-btn">
       </form>

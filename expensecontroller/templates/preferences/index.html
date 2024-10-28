@@ -2,19 +2,31 @@
 
 {% block content %}
 
-<div class="container mt-3">
-   <h5>Preferred Currency</h5>
+<div class="container mt-5">
 
+   {% include "partials/_messages.html" %}
+   <form action="{% url 'preferences' %}" method="post">
+      {% csrf_token %}
+      <div class="card w-80">
+         <div class="card-body">
+           <h4 class="card-title">Preferred Currency</h5>
+           <p class="card-text">Change your preferred currency (apply to all)</p>
+           <div class="input-group">
+              <select name="currency" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+               {% if user_preferences.currency %}
+                  <option name="currency" value="{{user_preferences.currency}}" selected>{{user_preferences.currency}}</option>
+               {% endif %} 
+               
+                 {% for currency in currencies %}
+                    <option name="currency" value={{currency.name}} - {{currency.value}}>{{currency.name}} - {{currency.value}}</option>
+                 {% endfor %}
+              </select>
+              <input class="btn btn-secondary" type="submit" value="Save"/>
+            </div>
+         </div>
+       </div>
+   </form>
 
-   <div class="input-group">
-      <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-        <option selected>Choose...</option>
-         {% for currency in currencies %}
-            <option selected>{{currency.name}} - {{currency.value}}</option>
-         {% endfor %}
-      </select>
-      <button class="btn btn-outline-secondary" type="button">Button</button>
-    </div>
 </div>
 
 </hr>
