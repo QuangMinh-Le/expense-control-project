@@ -33,14 +33,14 @@
         </tr>
       </thead>
       <tbody>
-        {% for expense in expenses %}
+        {% for expense in page_obj %}
         <tr>
           <td>{{expense.amount}}</td>
           <td>{{expense.category}}</td>
           <td>{{expense.description}}</td>
           <td>{{expense.date}}</td>
           <td>
-            <a href="{% url 'expense_edit' expense.id %}" class="btn btn-secondary btn-sm"
+            <a href="{% url 'expense_edit' expense.id %}" class="btn btn-outline-primary btn-sm"
               >Edit</a
             >
           </td>
@@ -48,6 +48,35 @@
         {% endfor %}
       </tbody>
     </table>
+
+    <div>
+      Showing page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+    </div>
+    <div>
+      <ul class="pagination align-right float-right mr-auto">
+        {% if page_obj.has_previous %}
+          <li {% if page_ob.number == 1 %} class="page-item active" {% endif %}>
+            <a class="page-link" href="?page=1">&laquo; 1</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a>
+          </li>
+        
+        {% endif %}
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.paginator.num_pages}}">{{page_obj.paginator.num_pages}} &raquo;</a>
+          </li>
+        
+        {% endif %}
+      </ul>
+    </div>
+    
+
+
     {% endif %}
   </div>
 </div>
