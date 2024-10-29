@@ -2,18 +2,23 @@
 {% block content %}
 
 <div class="container mt-4">
-  <div class="row  col-md-10">
-    <nav aria-label="breadcrumb">
-       <ol class="breadcrumb">
-         <li class="breadcrumb-item"><a href="{% url 'expenses'%}">Expenses</a></li>
-         <li class="breadcrumb-item active" aria-current="page">My expenses</li>
-       </ol>
-    </nav>
+
+  <div class="row">
+    <div class="col-md-10">
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb">
+           <li class="breadcrumb-item"><a href="{% url 'expenses'%}">Expenses</a></li>
+           <li class="breadcrumb-item active" aria-current="page">Edit Expense</li>
+         </ol>
+      </nav>
+    </div>
+    <div class="col-md-2">
+      <a href="{% url 'delete-expense' expense.id %}" role="button" class="btn btn-danger">Delete</a>
+    </div>
   </div>
-  
   <div class="card col-md-10">
     <div class="card-body">
-      <form action="{% url 'add-expense' %}" method="post">
+      <form action="{% url 'expense_edit' expense.id %}" method="post">
         {% include "partials/_messages.html" %}
         {% csrf_token %}
         <div class="form-group mb-3">
@@ -27,6 +32,9 @@
         <div class="form-group mb-3">
           <label class ="mb-1" for="">Category</label>
           <select name="category" id="" class="form-control">
+            <option name="category" value="{{value.category}}">
+              {{value.category}}
+            </option>
             {% for category in categories %}
               <option name="category" value="{{category.name}}">
                 {{category.name}}
@@ -39,7 +47,7 @@
           <input type="date" class="form-control form-control-sm" name="expense_date">
         </div>
 
-        <input type="submit" value="Submit" class="btn btn-primary">
+        <input type="submit" value="Save" class="btn btn-primary">
       </form>
       </div>
     </div>
