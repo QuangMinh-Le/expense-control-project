@@ -27,7 +27,7 @@ searchField.addEventListener('keyup', (e)=> {
                tableOutput.style.display = "none";
             } else {
                noResult.style.display = "none";
-               tableOutput.style.display = "block";
+               // tableOutput.style.display = "block";
                data.forEach(element => {
                   tBody.innerHTML+= `
                      <tr>
