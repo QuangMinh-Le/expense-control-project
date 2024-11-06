@@ -54,3 +54,50 @@ def add_income(request):
       messages.success(request, 'Income saved successfully!')
       
       return redirect('income')
+   
+
+def income_edit(request, id):
+   income = UserIncome.objects.get(pk=id)
+   sources = Source.objects.all()
+   context = {
+      'income': income,
+      'value': income,
+      'sources': sources
+   }
+   if request.method == "GET":
+      return render(request, 'income/edit_income.html', context)
+   if request.method == "POST":
+      amount = request.POST['amount']
+      description = request.POST['description']
+      source = request.POST['source']
+      date = request.POST['income_date']
+      
+      if not amount: 
+         messages.error(request, 'Amount is required')
+         return render(request, 'income/edit_income.html', context)
+   
+      
+      if not description: 
+         messages.error(request, 'Description is required')
+         return render(request, 'income/edit_income.html', context)
+      
+      if not date: 
+         messages.error(request, 'Date is required')
+         return render(request, 'income/edit_income.html', context)
+      
+      income.owner = request.user
+      income.amount=amount
+      income.description=description
+      income.source=source
+      income.date=date
+      
+      income.save()
+      messages.success(request, 'Income saved successfully!')
+      
+      return redirect('income')
+
+def delete_income(request, id):
+   income = UserIncome.objects.get(pk=id)
+   income.delete()
+   messages.success(request, 'Income removed')
+   return redirect('income')
