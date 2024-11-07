@@ -1,3 +1,5 @@
+import json
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from .models import Source, UserIncome
 from django.core.paginator import Paginator
@@ -101,3 +103,16 @@ def delete_income(request, id):
    income.delete()
    messages.success(request, 'Income removed')
    return redirect('income')
+
+def search_income(request):
+   if request.method=='POST':
+      search_str = json.loads(request.body).get('searchText')
+      income=UserIncome.objects.filter(
+         amount__istartswith=search_str, owner = request.user) | UserIncome.objects.filter(
+         date__istartswith=search_str, owner = request.user) | UserIncome.objects.filter(
+         description__icontains=search_str, owner = request.user) | UserIncome.objects.filter(
+         source__icontains=search_str, owner = request.user)
+
+      data = income.values()
+      
+      return JsonResponse(list(data), safe=False)
