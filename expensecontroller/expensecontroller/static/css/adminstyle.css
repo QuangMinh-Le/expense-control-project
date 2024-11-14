@@ -1,0 +1,10 @@
+#header {
+   background: #1a7e63;
+}
+#branding h1 {
+   color: aliceblue;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+   background: #78c2ad;
+}
