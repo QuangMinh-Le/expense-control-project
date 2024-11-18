@@ -107,3 +107,13 @@ class LogoutView(View):
       cache.clear()
       messages.success(request, "Successfully logged out.")
       return redirect('login')
+   
+class ResetPasswordView(View):
+   
+   def get(self, request):
+      context = {}
+      return render(request, 'authentication/reset-password.html', context)
+   
+   def post(self, request):
+      context = {}
+      return render(request, 'authentication/reset-password.html', context)
