@@ -116,4 +116,20 @@ class ResetPasswordView(View):
    
    def post(self, request):
       context = {}
-      return render(request, 'authentication/reset-password.html', context)
+      email = request.POST['email']
+      password=request.POST['password']
+      confirmPassword=request.POST['confirmPassword']
+      
+      if password != confirmPassword: 
+         messages.error(request, 'Password does not match')
+         return render(request, 'authentication/reset-password.html', context)
+      if len(password) < 6: 
+         messages.error(request, 'Password too short')
+         return render(request, 'authentication/reset-password.html', context)
+      user = User.objects.get(email=email)
+      user.set_password(password)
+      user.save()
+      
+      messages.success(request, "New password saved successfully")
+      return redirect('login')
+      # return render(request, 'authentication/reset-password.html', context)
