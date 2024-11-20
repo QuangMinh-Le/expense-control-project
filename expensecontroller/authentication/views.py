@@ -126,10 +126,15 @@ class ResetPasswordView(View):
       if len(password) < 6: 
          messages.error(request, 'Password too short')
          return render(request, 'authentication/reset-password.html', context)
-      user = User.objects.get(email=email)
-      user.set_password(password)
-      user.save()
       
-      messages.success(request, "New password saved successfully")
-      return redirect('login')
-      # return render(request, 'authentication/reset-password.html', context)
+      try:
+         user = User.objects.get(email=email)
+         user.set_password(password)
+         user.save()
+         
+         messages.success(request, "New password saved successfully")
+         return redirect('login')
+      except Exception as identifier:
+         messages.info(request, 'Somthing went wrong, please try again later.')
+         return render(request, 'authentication/reset-password.html', context)
+      
