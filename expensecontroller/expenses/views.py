@@ -8,6 +8,8 @@ from django.core.paginator import Paginator
 import json
 from django.http import JsonResponse
 
+import datetime
+
 # Create your views here.
 
 def search_expenses(request):
@@ -107,7 +109,6 @@ def expense_edit(request, id):
       expense.description=description
       expense.category=category
       expense.date=date
-      
       expense.save()
       messages.success(request, 'Expense saved successfully!')
       
@@ -118,3 +119,38 @@ def delete_expense(request, id):
    expense.delete()
    messages.success(request, 'Expense removed')
    return redirect('expenses')
+
+def expense_category_summary(request): 
+   today_date = datetime.date.today()
+   six_months_ago = today_date - datetime.timedelta(days = 30 * 6)
+   
+   expenses = Expense.objects.filter(
+      owner=request.user
+      ,date__gte=six_months_ago
+      ,date_lte=today_date)
+   
+   finalrep = {}
+   
+   def get_category(expense):
+      return expense.category
+   
+   # Wrap in map() to remove duplicates
+   category_list = list(set(map(get_category, expenses)))
+   
+   # Return the total amount of expense for each category
+   def get_expense_category_amount(category):
+      amount = 0
+      filter_by_category = expenses.filter(category=category)
+      for item in filter_by_category:
+         amount+= item.amount
+      return amount
+   
+   for x in expenses: 
+      for y in category_list:
+         finalrep[y]=get_expense_category_amount(y)
+         
+   return JsonResponse({'expenses_category_data': finalrep}, safe=False)
+
+
+def stats_view (request):
+   return render(request, 'expenses/stats.html')
